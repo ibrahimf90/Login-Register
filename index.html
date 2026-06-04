@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login & Register</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="wrapper" id="wrapper">
+        <div class="panel login-panel" id="loginPanel">
+          <div class="login-layout">
+            <div class="login-welcome">
+              <h2>Welcome back</h2>
+              <p>Sign in to your account to continue where you left off.</p>
+            </div>
+
+            <div class="login-form">
+              <div class="input-group">
+                <input type="email" id="email" required placeholder=" " />
+                <label for="email">Email</label>
+              </div>
+
+              <div class="input-group">
+                <input type="password" id="password" required placeholder=" " />
+                <label for="password">Password</label>
+              </div>
+
+              <label class="remember">
+                <input type="checkbox" />
+                Remember me
+              </label>
+
+              <button type="submit" class="action-btn">Login</button>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="register-tab" id="openRegister">
+          REGISTER
+        </button>
+
+        <div class="panel register-panel" id="registerPanel">
+          <div class="register-header">
+            <h2>Create an account</h2>
+            <button type="button" class="back-btn" id="goToLogin">
+              ← Back to login
+            </button>
+          </div>
+
+          <div class="register-grid">
+            <div class="section-label">Personal information</div>
+
+            <div class="input-group">
+              <input type="text" id="reg-firstname" required placeholder=" " />
+              <label for="reg-firstname">First name</label>
+            </div>
+
+            <div class="input-group">
+              <input type="text" id="reg-lastname" required placeholder=" " />
+              <label for="reg-lastname">Last name</label>
+            </div>
+
+            <div class="input-group">
+              <input type="email" id="reg-email" required placeholder=" " />
+              <label for="reg-email">Email</label>
+            </div>
+
+            <div class="input-group">
+              <input type="tel" id="reg-phone" required placeholder=" " />
+              <label for="reg-phone">Phone number</label>
+            </div>
+
+            <div class="input-group">
+              <input type="date" id="reg-dob" required placeholder=" " />
+              <label for="reg-dob" class="label-static">Date of birth</label>
+            </div>
+
+            <fieldset class="gender-group">
+              <legend>Gender</legend>
+              <div class="gender-options">
+                <label>
+                  <input type="radio" name="gender" value="male" required />
+                  Male
+                </label>
+                <label>
+                  <input type="radio" name="gender" value="female" />
+                  Female
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="section-label">Security</div>
+
+            <div class="input-group">
+              <input
+                type="password"
+                id="reg-password"
+                required
+                placeholder=" "
+              />
+              <label for="reg-password">Password</label>
+            </div>
+
+            <div class="input-group">
+              <input
+                type="password"
+                id="reg-confirm"
+                required
+                placeholder=" "
+              />
+              <label for="reg-confirm">Confirm password</label>
+              <span class="error-msg" id="confirm-error"
+                >Passwords do not match</span
+              >
+            </div>
+
+            <div class="register-actions">
+              <button type="submit" class="action-btn">Create account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>
+        © 2026 All Rights Reserved. Developed by
+        <a href="https://github.com/ibrahimf90" target="_blank"
+          >Ibrahim Fayyad</a
+        >
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

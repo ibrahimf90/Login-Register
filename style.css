@@ -1,0 +1,483 @@
+/*
+  ============================================================
+  style.css — Login & Register Page (Wide Layout)
+  ============================================================
+  Sections:
+    1.  Reset & CSS Variables
+    2.  Container
+    3.  Wrapper
+    4.  Panel (shared base)
+    5.  Login Panel
+    6.  Login Layout (2-column: welcome + form)
+    7.  Register Panel
+    8.  Register Header
+    9.  Register Grid (2-column fields)
+    10. Register Tab
+    11. Panel content z-index fix
+    12. Section Label
+    13. Input Group
+    14. Floating Label animation
+    15. Date input special case
+    16. Gender fieldset & radio buttons
+    17. Remember Me checkbox
+    18. Buttons & Actions
+    19. Error message
+  ============================================================
+*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --color-a: #2092e9; /* sky blue  — login diagonal left      */
+  --color-b: #6c7d36; /* olive     — login diagonal right     */
+  --tab-bg: #1d4f8a; /* ocean blue — register tab            */
+  --tab-hover: #2092e9; /* sky blue  — tab hover                */
+  --page-bg: #221461; /* deep navy — page background base     */
+  --w90: rgba(255, 255, 255, 0.9); /* bright — active labels, text    */
+  --w80: rgba(255, 255, 255, 0.8); /* slightly dimmed — body text     */
+  --w60: rgba(255, 255, 255, 0.6); /* muted — section labels          */
+  --w55: rgba(255, 255, 255, 0.55); /* placeholder label color         */
+  --w40: rgba(255, 255, 255, 0.4); /* borders, inactive elements      */
+  --w25: rgba(255, 255, 255, 0.25); /* button hover background         */
+  --w15: rgba(255, 255, 255, 0.15); /* button default background       */
+  --slide: 0.5s ease-in-out; /* panel slide open/close            */
+  --fast: 0.2s ease; /* hover, label, border transitions  */
+}
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--page-bg);
+  background-image:
+    radial-gradient(
+      ellipse at top left,
+      rgba(29, 79, 138, 0.6) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      rgba(97, 77, 112, 0.5) 0%,
+      transparent 50%
+    ),
+    linear-gradient(135deg, #221461 0%, #1d4f8a 50%, #221461 100%);
+  padding: 2rem 1rem;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+.wrapper {
+  width: 740px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  transition: height var(--slide);
+}
+.panel {
+  width: 700px;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  transition:
+    left var(--slide),
+    opacity var(--slide),
+    transform var(--slide);
+}
+.login-panel {
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  border-radius: 16px;
+  overflow: hidden; /* clips the ::before diagonal */
+}
+.login-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom right,
+    var(--color-a) 50%,
+    var(--color-b) 50%
+  );
+  z-index: 0;
+  border-radius: 16px;
+}
+.wrapper.register-open .login-panel {
+  left: -720px;
+  opacity: 0;
+}
+.login-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.login-welcome h2 {
+  color: white;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.login-welcome p {
+  color: var(--w80);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+.register-panel {
+  justify-content: flex-start;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  position: relative;
+  transform: translateX(110%);
+  opacity: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.register-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom right,
+    var(--color-b) 50%,
+    var(--color-a) 50%
+  );
+  z-index: 0;
+  border-radius: 16px;
+  pointer-events: none;
+}
+.wrapper.register-open .register-panel {
+  transform: translateX(0); /* back to normal position */
+  opacity: 1;
+}
+.register-header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.register-header h2 {
+  color: white;
+  font-size: 28px;
+  font-weight: 600;
+}
+.register-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 2rem;
+}
+.full-width {
+  grid-column: 1 / -1;
+}
+.register-tab {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: var(--tab-bg);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--w90);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  transition:
+    background var(--fast),
+    opacity var(--fast);
+  z-index: 10;
+  border-radius: 0 16px 16px 0;
+}
+.register-tab:hover {
+  background: var(--tab-hover);
+}
+.wrapper.register-open .register-tab {
+  opacity: 0;
+  pointer-events: none;
+}
+.panel > * {
+  position: relative;
+  z-index: 1;
+}
+.section-label {
+  grid-column: 1 / -1;
+  color: var(--w60);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 0.1rem;
+  margin-bottom: 0;
+}
+.input-group {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+.input-group input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--w40);
+  padding: 18px 0 6px 0;
+  color: white;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-bottom-color var(--fast);
+}
+.input-group input:focus {
+  border-bottom-color: white;
+}
+.input-group label {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  color: var(--w55);
+  font-size: 14px;
+  font-family: inherit;
+  transition:
+    top 0.2s ease,
+    font-size 0.2s ease,
+    color 0.2s ease;
+  pointer-events: none;
+}
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 11px;
+  color: var(--w90);
+}
+.input-group input::placeholder {
+  color: transparent;
+}
+.input-group::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1.5px;
+  background: white;
+  transition:
+    width var(--fast),
+    left var(--fast);
+}
+.input-group:focus-within::after {
+  left: 0;
+  width: 100%;
+}
+.label-static {
+  top: 0 !important;
+  font-size: 11px !important;
+  color: var(--w90) !important;
+}
+input[type="date"] {
+  color-scheme: dark;
+}
+.gender-group {
+  border: none;
+  padding: 0;
+  margin: 0 0 0.75rem 0;
+  position: relative;
+  z-index: 1;
+}
+.gender-group legend {
+  color: var(--w90);
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+.gender-options {
+  display: flex;
+  gap: 1.5rem;
+}
+.gender-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--w80);
+  font-size: 14px;
+  cursor: pointer;
+}
+.gender-options input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--w40);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color var(--fast);
+}
+.gender-options input[type="radio"]:checked {
+  border-color: white;
+}
+.gender-options input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--w80);
+  font-size: 13px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+.remember input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--w40);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition:
+    background var(--fast),
+    border-color var(--fast);
+}
+.remember input[type="checkbox"]:checked {
+  background: white;
+  border-color: white;
+}
+.remember input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid var(--color-a);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid var(--w40);
+  font-size: 0.875rem;
+}
+.footer p {
+  color: var(--w80);
+}
+.footer a {
+  color: var(--color-a);
+  text-decoration: none;
+  transition: color var(--fast);
+}
+.footer a:hover {
+  color: var(--tab-hover);
+  text-decoration: underline;
+}
+.action-btn {
+  background: var(--w15);
+  border: 1.5px solid var(--w40);
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  transition:
+    background var(--fast),
+    transform 0.1s ease;
+}
+.action-btn:hover {
+  background: var(--w25);
+}
+.action-btn:active {
+  transform: scale(0.97);
+}
+.switch-link {
+  background: none;
+  border: none;
+  color: var(--w60);
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+  transition: color var(--fast);
+}
+.switch-link:hover {
+  color: white;
+}
+.register-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+.register-actions .action-btn {
+  margin-bottom: 0;
+  flex: 1;
+}
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--w80);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  white-space: nowrap;
+  transition: color var(--fast);
+}
+.back-btn:hover {
+  color: white;
+}
+.error-msg {
+  display: none;
+  color: #ff6b6b;
+  font-size: 11px;
+  margin-top: 4px;
+}
