@@ -28,5 +28,3 @@ A modern, responsive authentication system built with clean HTML, CSS, and JavaS
 ## Author
 
 **Ibrahim Fayyad** 📍 Germany  |  💼 Full Stack Developer [https://github.com/ibrahimf90]
-
-_Feel free to customize this project and make it your own!_
